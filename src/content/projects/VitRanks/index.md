@@ -1,7 +1,7 @@
 ---
 title: "VitRanks"
 summary: "A webapp to analyse VIT university college options based on VITEEE rank."
-date: "2025-10-05"
+date: "2025-05-24"
 draft: false
 tags:
 - Webapp

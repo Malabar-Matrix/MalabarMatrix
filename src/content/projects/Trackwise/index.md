@@ -1,7 +1,7 @@
 ---
 title: "Trackwise"
 summary: "A full stack web application for tracking expenses and generating reports based on category, expenses/income."
-date: "2025-10-05"
+date: "2025-08-10"
 draft: false
 tags:
 - Full Stack

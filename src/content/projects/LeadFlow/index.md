@@ -1,7 +1,7 @@
 ---
 title: "LeadFlow"
 summary: "A full stack web application for tracking leads, managing progress, sending emails, and automating workflows."
-date: "2025-10-05"
+date: "2025-09-11"
 draft: false
 tags:
 - Full Stack

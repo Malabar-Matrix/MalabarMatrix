@@ -1,7 +1,7 @@
 ---
 title: "KeamRanks"
 summary: "A webapp to easily analyse KEAM entrance exam ranks, search for colleges, and create option registration lists."
-date: "2025-10-05"
+date: "2025-05-10"
 draft: false
 tags:
 - Webapp
