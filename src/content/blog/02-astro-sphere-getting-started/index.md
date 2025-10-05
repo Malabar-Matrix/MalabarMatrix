@@ -51,19 +51,11 @@ The header and footer branding icon is located in `/public/brand.svg` as a sprit
 
 Each page has a metadata entry that is useful for SEO.
 
-```js
-export const WORK: Page = {
-  TITLE: "Work",
-  DESCRIPTION: "Places I have worked.",
-}
-```
-
 The links that are displayed in the header and drawer
 
 ```js
 export const LINKS: Links = [
   { HREF: "/", TEXT: "Home" },
-  { HREF: "/work", TEXT: "Work" },
   { HREF: "/blog", TEXT: "Blog" },
   { HREF: "/projects", TEXT: "Projects" },
 ]

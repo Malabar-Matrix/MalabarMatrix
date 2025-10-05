@@ -5,6 +5,7 @@ import TopLayout from "@layouts/TopLayout.astro"
 import BottomLayout from "@layouts/BottomLayout.astro"
 import ArticleTopLayout from "@layouts/ArticleTopLayout.astro"
 import ArticleBottomLayout from "@layouts/ArticleBottomLayout.astro"
+import Carousel from "@components/Carousel.tsx";
 
 // Create the static projects pages
 export async function getStaticPaths() {
@@ -29,6 +30,7 @@ const { title, summary } = project.data
   </TopLayout>
   <BottomLayout>
     <div class="animate">
+      <Carousel images={project.data.images} />
       <ArticleBottomLayout entry={project} />
     </div>
   </BottomLayout>

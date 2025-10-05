@@ -1,0 +1,20 @@
+1. trackwise - a full stack web application for tracking expenses and generating reports based on 
+category, expenses/income. 
+
+visit here - trackwise.malabarmatrix.site
+
+2. LeadFlow - a full stack web application for tracking leads, managing the progress, sending emails
+have multiple automation features, unlimited users per deployement. 
+
+visit here - leadflow.malabarmatrix.site
+
+3. KeamRanks - a webapp made to easily analyse rank of KEAM entrance exam , search for colleges with 
+ranks, make option registration list within seconds, add free, more than 1900+ college data indexed, 
+used by more than 13k students
+
+available on - keamranks.vercel.app
+
+4. VitRanks - a webapp made to analyse college within VIT university across capuses, student can go 
+and the possible college that they can get by giving their VITEEE rank, used by more than 10k + students
+
+available on - ranks.vhome.co.in

@@ -7,12 +7,6 @@ export const SITE: Site = {
   AUTHOR: "Malabar Matrix Team",
   }
 
-// Work Page
-export const WORK: Page = {
-  TITLE: "Our Work",
-  DESCRIPTION: "A showcase of collaborations by Malabar Matrix.",
-  }
-
 // Blog Page
 export const BLOG: Page = {
   TITLE: "Blog",
@@ -38,10 +32,6 @@ export const LINKS: Links = [
     HREF: "/", 
   },
   { 
-    TEXT: "Work", 
-    HREF: "/work", 
-  },
-  { 
     TEXT: "Blog", 
     HREF: "/blog", 
   },
@@ -56,8 +46,8 @@ export const SOCIALS: Socials = [
   { 
     NAME: "Email",
     ICON: "email", 
-    TEXT: "err@titansec.team",
-    HREF: "mailto:err@titansec.team",
+    TEXT: "contact@malabarmatrix.site",
+    HREF: "mailto:contact@malabarmatrix.site",
   },
   { 
     NAME: "Github",
@@ -66,16 +56,10 @@ export const SOCIALS: Socials = [
     HREF: "https://github.com/Malabar-Matrix"
   },
   { 
-    NAME: "LinkedIn",
-    ICON: "linkedin",
-    TEXT: "msidharth",
-    HREF: "https://www.linkedin.com/in/msidharth/",
-  },
-  { 
-    NAME: "Twitter",
-    ICON: "twitter-x",
-    TEXT: "err_sidd",
-    HREF: "https://twitter.com/err_sidd",
+    NAME: "Instagram",
+    ICON: "instagram",
+    TEXT: "malabar.matrix",
+    HREF: "https://instagram.com/malabar.matrix",
   },
 ]
 

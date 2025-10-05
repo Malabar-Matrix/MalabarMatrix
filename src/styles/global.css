@@ -166,3 +166,24 @@ article img {
 .copy-svg {
   @apply w-full aspect-square text-white opacity-70 hover:opacity-90;
 }
+
+.carousel-container {
+  overflow-x: auto;
+  white-space: nowrap;
+  -webkit-overflow-scrolling: touch;
+}
+
+.carousel-track {
+  display: inline-flex;
+  gap: 1rem;
+}
+
+.carousel-slide {
+  flex: 0 0 auto;
+  width: 80%;
+}
+
+.carousel-slide img {
+  width: 100%;
+  border-radius: 0.5rem;
+}
