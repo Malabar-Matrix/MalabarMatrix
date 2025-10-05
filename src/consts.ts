@@ -3,7 +3,7 @@ import type { Site, Page, Links, Socials } from "@types"
 // Global
 export const SITE: Site = {
   TITLE: "Malabar Matrix",
-  DESCRIPTION: "Welcome to Malabar Matrix – your tech partner for innovative development solutions.",
+  DESCRIPTION: "Malabar Matrix provides innovative software solutions like our SaaS products Trackwise and LeadFlow, empowering small businesses. Contact: contact@malabarmatrix.site.",
   AUTHOR: "Malabar Matrix Team",
   }
 
