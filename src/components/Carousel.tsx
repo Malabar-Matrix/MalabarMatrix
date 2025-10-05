@@ -13,7 +13,7 @@ export default function Carousel({ images }: Props) {
     <div class="carousel-container">
       <div class="carousel-track">
         {images.map((image, index) => (
-          <div key={index} class="carousel-slide">
+          <div class="carousel-slide">
             <img src={image.src} alt={image.alt} />
           </div>
         ))}
