@@ -134,7 +134,3 @@ The **silent takeover** of the internet by machines isn’t just a technical cur
 4. [CRN India – AI Fuels Rise of Hard-to-Detect Bots](https://www.crn.in/news/artificial-intelligence-fuels-rise-of-hard-to-detect-bots-that-now-make-up-more-than-half-of-global-internet-traffic-according-to-the-2025-imperva-bad-bot-report/)  
 5. [Akamai – 6 Common Bot Attacks and Why They Happen](https://www.akamai.com/blog/security/bad-bots-6-common-bot-attacks-and-why-they-happen)
 
----
-
-*Written by **Sidharth M** – Security Researcher | Exploring Tech, Systems & Beyond*  
-Published on [Malabar Matrix](https://malabarmatrix.site)

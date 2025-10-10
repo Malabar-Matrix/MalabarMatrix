@@ -1,0 +1,130 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900">
+  <defs>
+    <style>
+      .bg { fill:#0E1116; }
+      .card { fill:#141922; stroke:#2B3140; stroke-width:2; rx:12; ry:12; }
+      .label { fill:#E6E8EB; font-family:Segoe UI, Roboto, Helvetica, Arial, sans-serif; font-size:20px; }
+      .small { fill:#C9CED6; font-family:Segoe UI, Roboto, Helvetica, Arial, sans-serif; font-size:16px; }
+      .title { fill:#FFFFFF; font-family:Segoe UI, Roboto, Helvetica, Arial, sans-serif; font-size:34px; font-weight:600; opacity:0.9; }
+      .subtitle { fill:#C9CED6; font-family:Segoe UI, Roboto, Helvetica, Arial, sans-serif; font-size:18px; opacity:0.9; }
+      .port { fill:#0E1116; stroke:#3A4153; stroke-width:1.5; rx:4; ry:4; }
+      .trunk { stroke:#8A8F98; stroke-width:8; stroke-linecap:round; opacity:0.9; }
+      .dash { stroke-dasharray:10 10; }
+      .mgmt { stroke:#00D1FF; stroke-width:4; }
+      .servers { stroke:#2F5DFF; stroke-width:4; }
+      .clients { stroke:#24D17E; stroke-width:4; }
+      .iot { stroke:#FFC24D; stroke-width:4; }
+      .guest { stroke:#FF4D8D; stroke-width:4; }
+      .dmz { stroke:#FF5A5A; stroke-width:4; }
+      .bubble { fill:#0E1116; stroke:#3A4153; stroke-width:1.5; rx:6; ry:6; }
+    </style>
+  </defs>
+
+  <!-- Background -->
+  <rect class="bg" x="0" y="0" width="1600" height="900"/>
+
+  <!-- Title -->
+  <text class="title" x="80" y="90">Home Server Lab: Subnets, VLANs, and Networking Essentials</text>
+  <text class="subtitle" x="80" y="120">Segmented design with VLANs, CIDR subnets, and secure routing</text>
+
+  <!-- Devices -->
+  <!-- ISP -->
+  <rect class="card" x="80" y="380" width="160" height="80"/>
+  <text class="label" x="110" y="430">ISP</text>
+
+  <!-- Firewall/Router -->
+  <rect class="card" x="300" y="340" width="220" height="160"/>
+  <text class="label" x="320" y="380">Firewall / Router</text>
+  <text class="small" x="320" y="410">Gateway .1 per subnet</text>
+  <text class="small" x="320" y="435">DHCP • DNS • VPN</text>
+
+  <!-- Managed Switch -->
+  <rect class="card" x="800" y="360" width="220" height="120"/>
+  <text class="label" x="820" y="400">Managed Switch</text>
+  <text class="small" x="820" y="425">802.1Q Trunk</text>
+
+  <!-- Hypervisor -->
+  <rect class="card" x="1150" y="420" width="200" height="120"/>
+  <text class="label" x="1170" y="460">Hypervisor (Proxmox)</text>
+  <text class="small" x="1170" y="485">VMs • Containers</text>
+
+  <!-- NAS -->
+  <rect class="card" x="1150" y="580" width="180" height="80"/>
+  <text class="label" x="1180" y="630">NAS (ZFS/SMB/NFS)</text>
+
+  <!-- Wi‑Fi AP -->
+  <rect class="card" x="1150" y="220" width="180" height="80"/>
+  <text class="label" x="1170" y="270">Wi‑Fi AP (SSIDs)</text>
+
+  <!-- DMZ Service Block -->
+  <rect class="card" x="1150" y="60" width="220" height="80"/>
+  <text class="label" x="1170" y="110">Lab / DMZ Services</text>
+
+  <!-- Clients Block -->
+  <rect class="card" x="1150" y="760" width="180" height="80"/>
+  <text class="label" x="1190" y="810">Clients</text>
+
+  <!-- Trunk: Firewall -> Switch -->
+  <line class="trunk" x1="520" y1="420" x2="800" y2="420"/>
+
+  <!-- ISP -> Firewall -->
+  <line class="trunk" x1="240" y1="420" x2="300" y2="420"/>
+
+  <!-- VLAN Paths from Switch -->
+  <!-- VLAN 10 Mgmt -->
+  <line class="mgmt" x1="910" y1="360" x2="910" y2="300"/>
+  <line class="mgmt" x1="910" y1="300" x2="1250" y2="300"/>
+  <rect class="bubble" x="1260" y="270" width="250" height="56"/>
+  <text class="small" x="1270" y="305">VLAN 10 Mgmt 10.10.10.0/24</text>
+
+  <!-- VLAN 20 Servers to Hypervisor -->
+  <line class="servers" x1="900" y1="480" x2="1150" y2="480"/>
+  <rect class="bubble" x="960" y="490" width="250" height="56"/>
+  <text class="small" x="970" y="525">VLAN 20 Servers 10.10.20.0/24</text>
+
+  <!-- VLAN 20 Servers to NAS -->
+  <line class="servers" x1="900" y1="500" x2="1150" y2="620"/>
+
+  <!-- VLAN 30 Clients -->
+  <line class="clients" x1="930" y1="480" x2="930" y2="780"/>
+  <line class="clients" x1="930" y1="780" x2="1150" y2="800"/>
+  <rect class="bubble" x="960" y="740" width="250" height="56"/>
+  <text class="small" x="970" y="775">VLAN 30 Clients 10.10.30.0/24</text>
+
+  <!-- VLAN 40 IoT to AP -->
+  <line class="iot" x1="880" y1="360" x2="880" y2="260"/>
+  <line class="iot" x1="880" y1="260" x2="1150" y2="260"/>
+  <rect class="bubble" x="680" y="210" width="250" height="56"/>
+  <text class="small" x="690" y="245">VLAN 40 IoT 10.10.40.0/24</text>
+
+  <!-- VLAN 50 Guest to AP -->
+  <line class="guest" x1="860" y1="360" x2="860" y2="240"/>
+  <line class="guest" x1="860" y1="240" x2="1150" y2="240"/>
+  <rect class="bubble" x="520" y="170" width="250" height="56"/>
+  <text class="small" x="530" y="205">VLAN 50 Guest 10.10.50.0/24</text>
+
+  <!-- VLAN 60 DMZ to DMZ block -->
+  <line class="dmz" x1="940" y1="360" x2="940" y2="100"/>
+  <line class="dmz" x1="940" y1="100" x2="1150" y2="100"/>
+  <rect class="bubble" x="930" y="40" width="270" height="56"/>
+  <text class="small" x="940" y="75">VLAN 60 DMZ 10.10.60.0/24</text>
+
+  <!-- Inter-VLAN dashed example (through firewall policy) -->
+  <line class="servers dash" x1="520" y1="420" x2="520" y2="240"/>
+  <line class="servers dash" x1="520" y1="240" x2="860" y2="240"/>
+
+  <!-- Legend -->
+  <rect class="card" x="80" y="720" width="540" height="150"/>
+  <text class="label" x="100" y="760">Legend</text>
+
+  <line class="mgmt" x1="100" y1="780" x2="140" y2="780"/><text class="small" x="160" y="786">Mgmt</text>
+  <line class="servers" x1="260" y1="780" x2="300" y2="780"/><text class="small" x="320" y="786">Servers</text>
+  <line class="clients" x1="420" y1="780" x2="460" y2="780"/><text class="small" x="480" y="786">Clients</text>
+
+  <line class="iot" x1="100" y1="810" x2="140" y2="810"/><text class="small" x="160" y="816">IoT</text>
+  <line class="guest" x1="260" y1="810" x2="300" y2="810"/><text class="small" x="320" y="816">Guest</text>
+  <line class="dmz" x1="420" y1="810" x2="460" y2="810"/><text class="small" x="480" y="816">DMZ</text>
+
+  <line class="trunk" x1="100" y1="840" x2="160" y2="840"/><text class="small" x="170" y="846">802.1Q Trunk</text>
+  <line class="servers dash" x1="330" y1="840" x2="390" y2="840"/><text class="small" x="400" y="846">Policy-allowed flow</text>
+</svg>
