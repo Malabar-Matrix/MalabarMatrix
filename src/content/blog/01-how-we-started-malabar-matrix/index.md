@@ -8,7 +8,7 @@ tags:
 - Student Projects
 - SaaS
 ---
-![# MALABAR MATRIX](/c1.webp)
+![# MALABAR MATRIX](/blog_img/01/c1.webp)
 
 As freshmen in college, we quickly discovered that much of the software available to us was either outdated or lacked the functionality we needed. We saw an opportunity to create something better. This led to the birth of Malabar Matrix.
 
