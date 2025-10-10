@@ -1,5 +1,6 @@
 # MalabarMatrix
 ![# MalabarMatrix](c1.webp)
+![# MalabarMatrix](c2.webp)
 #
 [![Website](https://img.shields.io/badge/website-malabarmatrix.site-blue)](https://malabarmatrix.site) [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
@@ -29,7 +30,7 @@ We are a team of software engineers, UI/UX designers, product strategists, tech 
 - **Continuous learning & iteration**  
 - Building tools that help students, startups, and small businesses thrive
 
-On our site, you’ll see blog articles, open-source project highlights, and development tooling we use internally. :contentReference[oaicite:0]{index=0}
+On our site, you’ll see blog articles, open-source project highlights, and development tooling we use internally.
 
 ---
 
@@ -37,9 +38,9 @@ On our site, you’ll see blog articles, open-source project highlights, and dev
 
 Here are some of our active or flagship projects:
 
-- **LeadFlow** — Full-stack lead tracking, pipeline automation, and email workflows (Sep 2025) :contentReference[oaicite:1]{index=1}  
-- **Trackwise** — Expense tracker & report generator (Aug 2025) :contentReference[oaicite:2]{index=2}  
-- **VitRanks** — Web app to analyze VIT college options using VITEEE rank (May 2025) :contentReference[oaicite:3]{index=3}  
+- **LeadFlow** — Full-stack lead tracking, pipeline automation, and email workflows (Sep 2025)
+- **Trackwise** — Expense tracker & report generator (Aug 2025)
+- **VitRanks** — Web app to analyze VIT college options using VITEEE rank (May 2025)  
 - **Blog & Content Platform** — Articles, tutorials, announcements
 
 We also explore AI, DevOps tooling, cloud integrations, and micro-services architecture.
@@ -61,19 +62,3 @@ While individual projects may have their own stacks, here are technologies commo
 
 ---
 
-## Getting Started
-
-Here’s how you can set up this project locally.
-
-### Prerequisites
-
-- Node.js (v16+)  
-- npm or Yarn  
-- Git  
-
-### Setup
-
-1. **Clone the repo**  
-   ```bash
-   git clone https://github.com/Malabar-Matrix/MalabarMatrix.git
-   cd MalabarMatrix
