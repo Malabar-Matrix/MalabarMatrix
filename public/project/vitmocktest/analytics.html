@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VIT RANKS — Platform Analytics Report</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
+<style>
+:root { --bg:#fff; --card:#f7f8fa; --border:#dfe2e7; --border-hi:#c5c9d2; --text:#111; --dim:#4b5060; --mute:#8b919f; --blue:#0d6efd; --green:#198754; --red:#dc3545; --orange:#d97706; --purple:#6f42c1; --gap:20px; }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:16px}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+.page{max-width:1100px;margin:0 auto;padding:48px 32px 80px}
+@media(max-width:700px){.page{padding:24px 16px 48px}}
+
+/* Header */
+.hdr{border-bottom:3px solid var(--text);padding-bottom:16px;margin-bottom:48px;display:flex;align-items:center;gap:16px}
+.hdr-logo{width:52px;height:52px;border:1px solid var(--border);background:var(--bg);display:grid;place-items:center;flex-shrink:0;overflow:hidden}
+.hdr-logo img{width:100%;height:100%;object-fit:contain;display:block}
+.hdr-text{flex:1;min-width:0}
+.hdr h1{font-size:2rem;font-weight:700;letter-spacing:-.5px}
+.hdr p{font-family:'DM Mono',monospace;font-size:.8rem;color:var(--mute);margin-top:4px}
+
+/* Sections */
+.sec{margin-bottom:56px}
+.sec-hdr{display:flex;align-items:baseline;gap:12px;margin-bottom:6px}
+.sec-num{font-family:'DM Mono',monospace;font-size:.85rem;color:var(--blue);font-weight:500}
+.sec h2{font-size:1.4rem;font-weight:700;letter-spacing:-.3px}
+.sec-line{height:2px;background:var(--border);margin-bottom:24px}
+
+/* KPI strip */
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:28px}
+.kp{background:var(--bg);padding:20px}
+.kp-v{font-family:'DM Mono',monospace;font-size:1.7rem;font-weight:500;letter-spacing:-.5px}
+.kp-l{font-size:.85rem;color:var(--dim);margin-top:2px}
+.kp-s{font-family:'DM Mono',monospace;font-size:.7rem;color:var(--mute);margin-top:2px}
+
+/* Grids */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:var(--gap)}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:var(--gap)}
+@media(max-width:900px){.g3{grid-template-columns:1fr}}
+@media(max-width:700px){.g2{grid-template-columns:1fr}}
+
+/* Cards */
+.card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:20px}
+.card h3{font-size:1rem;font-weight:600;margin-bottom:14px}
+.card-sub{font-family:'DM Mono',monospace;font-size:.7rem;color:var(--mute);margin-left:6px;font-weight:400}
+
+/* Stat rows */
+.sr{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:.95rem}
+.sr:last-child{border-bottom:none}
+.sr-l{color:var(--dim)}
+.sr-v{font-family:'DM Mono',monospace;font-weight:500}
+
+/* Colors */
+.c-b{color:var(--blue)}.c-g{color:var(--green)}.c-r{color:var(--red)}.c-o{color:var(--orange)}.c-p{color:var(--purple)}
+
+/* Tables */
+table{width:100%;border-collapse:collapse;font-size:.9rem}
+th{font-family:'DM Mono',monospace;font-size:.7rem;text-transform:uppercase;letter-spacing:1px;color:var(--mute);text-align:left;padding:8px 10px;border-bottom:2px solid var(--border);font-weight:400}
+th:not(:first-child){text-align:right}
+td{padding:8px 10px;border-bottom:1px solid var(--border);color:var(--dim)}
+td:first-child{color:var(--text)}
+td:not(:first-child){text-align:right;font-family:'DM Mono',monospace}
+tr:last-child td{border-bottom:none}
+
+/* Bar chart */
+.bar-row{display:grid;grid-template-columns:130px 1fr 60px;align-items:center;gap:8px;margin-bottom:8px}
+.bar-lbl{font-size:.85rem;color:var(--dim);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bar-track{height:6px;background:var(--border);border-radius:3px;overflow:hidden}
+.bar-fill{height:100%;border-radius:3px}
+.bar-val{font-family:'DM Mono',monospace;font-size:.8rem;text-align:right;color:var(--dim)}
+
+/* Daily grid */
+.daily-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(54px,1fr));gap:4px}
+.day-cell{border-radius:6px;padding:6px 4px;text-align:center;cursor:default;position:relative}
+.day-cell:hover{outline:2px solid var(--blue);outline-offset:-1px}
+.day-date{font-family:'DM Mono',monospace;font-size:.6rem;color:var(--mute);line-height:1.2}
+.day-val{font-family:'DM Mono',monospace;font-size:.8rem;font-weight:500;line-height:1.4}
+.cal-summary{font-family:'DM Mono',monospace;font-size:.8rem;color:var(--dim)}
+.cal-legend{display:flex;align-items:center;gap:6px;font-family:'DM Mono',monospace;font-size:.7rem;color:var(--mute)}
+.cal-legend-box{width:14px;height:14px;border-radius:3px}
+
+/* Gallery */
+.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:var(--gap)}
+.gal-item{border:1px solid var(--border);border-radius:8px;overflow:hidden}
+.gal-img{width:100%;aspect-ratio:16/10;background:var(--card);display:grid;place-items:center;color:var(--mute);font-family:'DM Mono',monospace;font-size:.8rem;overflow:hidden}
+.gal-img img{width:100%;height:100%;object-fit:cover;object-position:top}
+.gal-cap{padding:12px 14px;display:flex;justify-content:space-between;font-size:.9rem}
+.gal-cap-url{font-family:'DM Mono',monospace;font-size:.75rem;color:var(--mute)}
+
+/* Cloudflare R2 section */
+.cf-hero{background:linear-gradient(135deg,#f0f4ff,#e8f0fe);border:1px solid #c8d6f0;border-radius:10px;padding:28px 32px;margin-bottom:24px;text-align:center}
+.cf-total{display:flex;align-items:baseline;justify-content:center;gap:10px;flex-wrap:wrap}
+.cf-num{font-family:'DM Mono',monospace;font-size:2.4rem;font-weight:500;color:var(--blue);letter-spacing:-1px}
+.cf-label{font-size:1rem;color:var(--dim)}
+.cf-sub{font-family:'DM Mono',monospace;font-size:.8rem;color:var(--mute);margin-top:6px}
+.cf-bars{display:flex;flex-direction:column;gap:12px;margin-bottom:16px}
+.cf-row{display:grid;grid-template-columns:120px 1fr 90px 60px;align-items:center;gap:12px}
+.cf-country{font-size:.95rem;font-weight:500}
+.cf-track{height:28px;background:var(--card);border:1px solid var(--border);border-radius:6px;overflow:hidden}
+.cf-fill{height:100%;background:linear-gradient(90deg,#3b82f6,#60a5fa);border-radius:5px}
+.cf-val{font-family:'DM Mono',monospace;font-size:.85rem;text-align:right;color:var(--dim)}
+.cf-pct{font-family:'DM Mono',monospace;font-size:.8rem;text-align:right;color:var(--mute)}
+.cf-rest{font-size:.85rem;color:var(--mute);font-style:italic;padding:8px 0}
+@media(max-width:600px){.cf-row{grid-template-columns:90px 1fr 70px 50px}.cf-num{font-size:1.8rem}}
+
+/* Footer */
+.footer{margin-top:60px;padding-top:20px;border-top:1px solid var(--border);font-family:'DM Mono',monospace;font-size:.75rem;color:var(--mute);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="hdr">
+    <div class="hdr-logo"><img src="https://ranks.vhome.co.in/_next/image?url=%2Flogo.png&amp;w=64&amp;q=75" alt="VIT Ranks logo"></div>
+    <div class="hdr-text">
+      <h1>VIT RANKS — Analytics Report</h1>
+      <p>ranks.vhome.co.in &middot; Generated <span id="gen-date"></span> &middot; A Malabar Matrix Initiative</p>
+    </div>
+  </div>
+
+  <!-- ━━━ 1. TEST USAGE ━━━ -->
+  <section class="sec">
+    <div class="sec-hdr"><span class="sec-num">01</span><h2>Test Usage</h2></div>
+    <div class="sec-line"></div>
+    <div class="kpis">
+      <div class="kp"><div class="kp-v c-b">41,260</div><div class="kp-l">Mock Tests Started</div><div class="kp-s">all time</div></div>
+      <div class="kp"><div class="kp-v">24,489</div><div class="kp-l">Predefined Attempts</div><div class="kp-s">curated tests</div></div>
+      <div class="kp"><div class="kp-v">16,771</div><div class="kp-l">Random Test Attempts</div><div class="kp-s">user-generated</div></div>
+      <div class="kp"><div class="kp-v">1,781</div><div class="kp-l">Syllabus Downloads</div><div class="kp-s">all time</div></div>
+      <div class="kp"><div class="kp-v">3,489</div><div class="kp-l">Subscribers</div><div class="kp-s">email list</div></div>
+    </div>
+
+    <!-- Daily grid -->
+    <div class="card">
+      <h3>Daily Mock Test Starts<span class="card-sub">LAST 90 DAYS</span></h3>
+      <div class="cal-summary" id="cal-summary" style="margin-bottom:16px"></div>
+      <div class="daily-grid" id="daily-grid"></div>
+      <div class="cal-legend" style="margin-top:14px">
+        <span>Less</span>
+        <span class="cal-legend-box" style="background:#ebedf0"></span>
+        <span class="cal-legend-box" style="background:#9be9a8"></span>
+        <span class="cal-legend-box" style="background:#40c463"></span>
+        <span class="cal-legend-box" style="background:#30a14e"></span>
+        <span class="cal-legend-box" style="background:#216e39"></span>
+        <span>More</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ━━━ 1b. CLOUDFLARE R2 ━━━ -->
+  <section class="sec">
+    <div class="sec-hdr"><span class="sec-num">01b</span><h2>Cloudflare R2 — Image CDN</h2></div>
+    <div class="sec-line"></div>
+    <div class="cf-hero">
+      <div class="cf-total"><span class="cf-num">57,85,765</span><span class="cf-label">total image requests served</span></div>
+      <div class="cf-sub">68 countries &middot; Cloudflare R2 edge network</div>
+    </div>
+    <div class="cf-bars">
+      <div class="cf-row"><div class="cf-country">India</div><div class="cf-track"><div class="cf-fill" style="width:100%"></div></div><div class="cf-val">56,58,618</div><div class="cf-pct">97.8%</div></div>
+      <div class="cf-row"><div class="cf-country">United States</div><div class="cf-track"><div class="cf-fill" style="width:18.5%"></div></div><div class="cf-val">23,473</div><div class="cf-pct">0.41%</div></div>
+      <div class="cf-row"><div class="cf-country">UAE</div><div class="cf-track"><div class="cf-fill" style="width:15.5%"></div></div><div class="cf-val">19,714</div><div class="cf-pct">0.34%</div></div>
+      <div class="cf-row"><div class="cf-country">Netherlands</div><div class="cf-track"><div class="cf-fill" style="width:13.2%"></div></div><div class="cf-val">16,720</div><div class="cf-pct">0.29%</div></div>
+      <div class="cf-row"><div class="cf-country">France</div><div class="cf-track"><div class="cf-fill" style="width:11.6%"></div></div><div class="cf-val">14,731</div><div class="cf-pct">0.25%</div></div>
+    </div>
+    <div class="cf-rest">+ 63 other countries including Singapore, Kuwait, Oman, UK, Qatar, Canada, Japan, China, Germany</div>
+  </section>
+
+  <!-- ━━━ 2. GOOGLE ANALYTICS ━━━ -->
+  <section class="sec">
+    <div class="sec-hdr"><span class="sec-num">02</span><h2>Google Analytics (GA4)</h2></div>
+    <div class="sec-line"></div>
+    <p style="font-size:.9rem;color:var(--mute);margin-bottom:20px">Last 7 days</p>
+    <div class="kpis" style="margin-bottom:24px">
+      <div class="kp"><div class="kp-v c-g">17,368</div><div class="kp-l">Active Users</div></div>
+      <div class="kp"><div class="kp-v c-p">45,059</div><div class="kp-l">Sessions</div></div>
+      <div class="kp"><div class="kp-v">1,56,279</div><div class="kp-l">Page Views</div></div>
+      <div class="kp"><div class="kp-v">4,32,932</div><div class="kp-l">Events</div></div>
+    </div>
+    <div class="g2">
+      <div class="card">
+        <h3>Top Pages<span class="card-sub">BY VIEWS</span></h3>
+        <table>
+          <thead><tr><th>Page</th><th>Views</th><th>Share</th></tr></thead>
+          <tbody>
+            <tr><td>/mocktest</td><td>49,326</td><td>31.6%</td></tr>
+            <tr><td>/mocktest/setup</td><td>37,830</td><td>24.2%</td></tr>
+            <tr><td>/mocktest/start</td><td>28,734</td><td>18.4%</td></tr>
+            <tr><td>/mocktest/results</td><td>20,205</td><td>12.9%</td></tr>
+            <tr><td>/mocktest/results/detailed</td><td>16,320</td><td>10.4%</td></tr>
+            <tr><td>/</td><td>2,322</td><td>1.5%</td></tr>
+            <tr><td>/donate</td><td>1,516</td><td>1.0%</td></tr>
+            <tr><td>/terms</td><td>13</td><td>0.0%</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="card">
+        <h3>Traffic Channels<span class="card-sub">BY SESSIONS</span></h3>
+        <div class="bar-row"><span class="bar-lbl">Organic Search</span><div class="bar-track"><div class="bar-fill" style="width:100%;background:var(--blue)"></div></div><span class="bar-val">39,686</span></div>
+        <div class="bar-row"><span class="bar-lbl">Direct</span><div class="bar-track"><div class="bar-fill" style="width:9.1%;background:var(--blue)"></div></div><span class="bar-val">3,613</span></div>
+        <div class="bar-row"><span class="bar-lbl">Unassigned</span><div class="bar-track"><div class="bar-fill" style="width:3.4%;background:var(--blue)"></div></div><span class="bar-val">1,346</span></div>
+        <div class="bar-row"><span class="bar-lbl">Referral</span><div class="bar-track"><div class="bar-fill" style="width:1.3%;background:var(--blue)"></div></div><span class="bar-val">521</span></div>
+        <div class="bar-row"><span class="bar-lbl">Organic Social</span><div class="bar-track"><div class="bar-fill" style="width:0.4%;background:var(--blue)"></div></div><span class="bar-val">168</span></div>
+        <div style="margin-top:20px">
+          <h3 style="font-size:.95rem">Channel Breakdown</h3>
+          <div class="sr"><span class="sr-l">Organic Search</span><span class="sr-v">88.1%</span></div>
+          <div class="sr"><span class="sr-l">Direct</span><span class="sr-v">8.0%</span></div>
+          <div class="sr"><span class="sr-l">Unassigned</span><span class="sr-v">3.0%</span></div>
+          <div class="sr"><span class="sr-l">Referral</span><span class="sr-v">1.2%</span></div>
+          <div class="sr"><span class="sr-l">Organic Social</span><span class="sr-v">0.4%</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ━━━ 3. SEARCH CONSOLE & BING ━━━ -->
+  <section class="sec">
+    <div class="sec-hdr"><span class="sec-num">03</span><h2>Search Performance</h2></div>
+    <div class="sec-line"></div>
+    <div class="g2" style="margin-bottom:24px">
+      <div class="card">
+        <h3>Google Search Console<span class="card-sub">28 DAYS</span></h3>
+        <div class="sr"><span class="sr-l">Total Clicks</span><span class="sr-v c-b">37,700</span></div>
+        <div class="sr"><span class="sr-l">Total Impressions</span><span class="sr-v">2,53,378</span></div>
+        <div class="sr"><span class="sr-l">Avg. CTR</span><span class="sr-v c-g">14.88%</span></div>
+        <div class="sr"><span class="sr-l">Avg. Position</span><span class="sr-v">5.2</span></div>
+      </div>
+      <div class="card">
+        <h3>Bing Webmaster<span class="card-sub">28 DAYS</span></h3>
+        <div class="sr"><span class="sr-l">Total Clicks</span><span class="sr-v c-b">2,793</span></div>
+        <div class="sr"><span class="sr-l">Total Impressions</span><span class="sr-v">10,540</span></div>
+        <div class="sr"><span class="sr-l">Avg. CTR</span><span class="sr-v c-g">26.50%</span></div>
+        <div class="sr"><span class="sr-l">Avg. Position</span><span class="sr-v">1.1</span></div>
+      </div>
+    </div>
+    <div class="g2">
+      <div class="card">
+        <h3>Google Top Queries<span class="card-sub">15 QUERIES</span></h3>
+        <table>
+          <thead><tr><th>Query</th><th>Clicks</th><th>Imp.</th><th>CTR</th><th>Pos.</th></tr></thead>
+          <tbody>
+            <tr><td>viteee mock test</td><td>11,745</td><td>37,809</td><td>31.1%</td><td>2.0</td></tr>
+            <tr><td>viteee mock test 2026</td><td>4,017</td><td>14,279</td><td>28.1%</td><td>2.1</td></tr>
+            <tr><td>vit mock test</td><td>4,005</td><td>13,313</td><td>30.1%</td><td>2.0</td></tr>
+            <tr><td>vit mock test 2026</td><td>2,269</td><td>7,958</td><td>28.5%</td><td>2.1</td></tr>
+            <tr><td>viteee free mock test</td><td>802</td><td>2,036</td><td>39.4%</td><td>1.8</td></tr>
+            <tr><td>viteee 2026 mock test</td><td>664</td><td>2,360</td><td>28.1%</td><td>2.2</td></tr>
+            <tr><td>viteee mock test free</td><td>609</td><td>2,211</td><td>27.5%</td><td>2.4</td></tr>
+            <tr><td>vitee mock test</td><td>533</td><td>1,878</td><td>28.4%</td><td>2.1</td></tr>
+            <tr><td>viteee mock test online free</td><td>483</td><td>1,916</td><td>25.2%</td><td>2.1</td></tr>
+            <tr><td>viteee mock</td><td>418</td><td>1,751</td><td>23.9%</td><td>2.7</td></tr>
+            <tr><td>viteee mock tests</td><td>313</td><td>1,043</td><td>30.0%</td><td>2.1</td></tr>
+            <tr><td>vit mock test free</td><td>260</td><td>1,242</td><td>20.9%</td><td>2.3</td></tr>
+            <tr><td>vit ranks</td><td>259</td><td>446</td><td>58.1%</td><td>2.6</td></tr>
+            <tr><td>viteee</td><td>222</td><td>63,969</td><td>0.3%</td><td>9.0</td></tr>
+            <tr><td>viteee mocks</td><td>189</td><td>707</td><td>26.7%</td><td>2.4</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="card">
+        <h3>Bing Top Queries<span class="card-sub">10 QUERIES</span></h3>
+        <table>
+          <thead><tr><th>Query</th><th>Clicks</th><th>Imp.</th><th>CTR</th><th>Pos.</th></tr></thead>
+          <tbody>
+            <tr><td>viteee mock test</td><td>470</td><td>1,056</td><td>44.5%</td><td>1.0</td></tr>
+            <tr><td>viteee mock test 2026</td><td>429</td><td>1,277</td><td>33.6%</td><td>1.3</td></tr>
+            <tr><td>vit mock test</td><td>161</td><td>424</td><td>38.0%</td><td>1.3</td></tr>
+            <tr><td>vit mock tests</td><td>132</td><td>418</td><td>31.6%</td><td>1.0</td></tr>
+            <tr><td>vit mock test free</td><td>72</td><td>141</td><td>51.1%</td><td>1.0</td></tr>
+            <tr><td>viteee free mock test</td><td>60</td><td>120</td><td>50.0%</td><td>1.0</td></tr>
+            <tr><td>vitee mock test</td><td>44</td><td>139</td><td>31.7%</td><td>1.0</td></tr>
+            <tr><td>viteee mock tests</td><td>30</td><td>97</td><td>30.9%</td><td>1.0</td></tr>
+            <tr><td>viteee 2026 mock test</td><td>28</td><td>58</td><td>48.3%</td><td>1.0</td></tr>
+            <tr><td>viteee mock</td><td>26</td><td>55</td><td>47.3%</td><td>1.0</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ━━━ 4. MICROSOFT CLARITY ━━━ -->
+  <section class="sec">
+    <div class="sec-hdr"><span class="sec-num">04</span><h2>Microsoft Clarity</h2></div>
+    <div class="sec-line"></div>
+    <p style="font-size:.9rem;color:var(--mute);margin-bottom:20px">Live insights</p>
+    <div class="kpis" style="margin-bottom:24px">
+      <div class="kp"><div class="kp-v c-b">1,430</div><div class="kp-l">Total Sessions</div></div>
+      <div class="kp"><div class="kp-v">1,177</div><div class="kp-l">Distinct Users</div></div>
+      <div class="kp"><div class="kp-v c-r">410</div><div class="kp-l">Bot Sessions</div></div>
+      <div class="kp"><div class="kp-v">3.4</div><div class="kp-l">Pages / Session</div></div>
+      <div class="kp"><div class="kp-v">66.6%</div><div class="kp-l">Avg Scroll Depth</div></div>
+      <div class="kp"><div class="kp-v">488s</div><div class="kp-l">Active Time</div></div>
+    </div>
+    <div class="g2" style="margin-bottom:var(--gap)">
+      <div class="card">
+        <h3>UX Signals</h3>
+        <div class="sr"><span class="sr-l">Dead Clicks</span><span class="sr-v c-o">33.6% (2,578 clicks)</span></div>
+        <div class="sr"><span class="sr-l">Rage Clicks</span><span class="sr-v c-r">2.6% (330 clicks)</span></div>
+        <div class="sr"><span class="sr-l">Quick Backs</span><span class="sr-v">19.1%</span></div>
+        <div class="sr"><span class="sr-l">Excessive Scroll</span><span class="sr-v">0.1%</span></div>
+        <div class="sr"><span class="sr-l">Script Errors</span><span class="sr-v">0.4%</span></div>
+        <div class="sr"><span class="sr-l">Error Clicks</span><span class="sr-v">0.3%</span></div>
+      </div>
+      <div class="card">
+        <h3>Referrers</h3>
+        <table>
+          <thead><tr><th>Source</th><th>Sessions</th></tr></thead>
+          <tbody>
+            <tr><td>google.com</td><td>856</td></tr>
+            <tr><td>(direct)</td><td>273</td></tr>
+            <tr><td>bing.com</td><td>62</td></tr>
+            <tr><td>yahoo.com</td><td>26</td></tr>
+            <tr><td>Google App</td><td>18</td></tr>
+            <tr><td>chatgpt.com</td><td>10</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="g3">
+      <div class="card">
+        <h3>Browsers</h3>
+        <table>
+          <thead><tr><th>Browser</th><th>Sessions</th></tr></thead>
+          <tbody>
+            <tr><td>Chrome</td><td>816</td></tr>
+            <tr><td>Chrome Mobile</td><td>373</td></tr>
+            <tr><td>Edge</td><td>122</td></tr>
+            <tr><td>Mobile Safari</td><td>40</td></tr>
+            <tr><td>Safari</td><td>26</td></tr>
+            <tr><td>Google App</td><td>22</td></tr>
+            <tr><td>Opera</td><td>15</td></tr>
+            <tr><td>Firefox</td><td>8</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="card">
+        <h3>Devices &amp; OS</h3>
+        <table>
+          <thead><tr><th>Device</th><th>Sessions</th></tr></thead>
+          <tbody><tr><td>PC</td><td>903</td></tr><tr><td>Mobile</td><td>387</td></tr><tr><td>Tablet</td><td>141</td></tr></tbody>
+        </table>
+        <div style="height:14px"></div>
+        <table>
+          <thead><tr><th>OS</th><th>Sessions</th></tr></thead>
+          <tbody>
+            <tr><td>Windows</td><td>765</td></tr><tr><td>Android</td><td>445</td></tr><tr><td>iOS</td><td>83</td></tr>
+            <tr><td>Linux</td><td>68</td></tr><tr><td>macOS</td><td>61</td></tr><tr><td>ChromeOS</td><td>8</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="card">
+        <h3>Countries</h3>
+        <table>
+          <thead><tr><th>Country</th><th>Sessions</th></tr></thead>
+          <tbody>
+            <tr><td>India</td><td>1,396</td></tr><tr><td>Kuwait</td><td>7</td></tr><tr><td>Netherlands</td><td>7</td></tr>
+            <tr><td>Qatar</td><td>7</td></tr><tr><td>Oman</td><td>6</td></tr><tr><td>UAE</td><td>5</td></tr><tr><td>United States</td><td>2</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ━━━ 5. TEST INTERFACES ━━━ -->
+  <section class="sec">
+    <div class="sec-hdr"><span class="sec-num">05</span><h2>Test Interfaces</h2></div>
+    <div class="sec-line"></div>
+    <p style="font-size:.95rem;color:var(--dim);margin-bottom:20px">Two interface options are available to students — a modern dark-themed UI and an official VITEEE CBT-style interface.</p>
+    <div class="g2">
+      <div class="gal-item"><div class="gal-img" style="aspect-ratio:16/10"><img src="https://bucket-viteee-mock-test.malabarmatrix.site/images/ui-vitranks.webp" alt="Modern dark-themed test interface"></div><div class="gal-cap"><span>Modern UI</span><span class="gal-cap-url">Dark theme &middot; Custom design</span></div></div>
+      <div class="gal-item"><div class="gal-img" style="aspect-ratio:16/10"><img src="https://bucket-viteee-mock-test.malabarmatrix.site/images/vit-ui.webp" alt="Official VITEEE CBT-style interface"></div><div class="gal-cap"><span>VITEEE CBT Interface</span><span class="gal-cap-url">Official exam style &middot; Realistic practice</span></div></div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div>VIT RANKS &middot; ranks.vhome.co.in &middot; A Malabar Matrix Initiative &middot; vitranks@malabarmatrix.site</div>
+    <div>VitDash v1.1.3</div>
+  </footer>
+</div>
+
+<script>
+var DAY_DATA=[
+{date:'2026-05-03',v:222},{date:'2026-05-02',v:2094},{date:'2026-05-01',v:2594},
+{date:'2026-04-30',v:1849},{date:'2026-04-29',v:3440},{date:'2026-04-28',v:4988},
+{date:'2026-04-27',v:5287},{date:'2026-04-26',v:3230},{date:'2026-04-25',v:2569},
+{date:'2026-04-24',v:2107},{date:'2026-04-23',v:2047},{date:'2026-04-22',v:1932},
+{date:'2026-04-21',v:1884},{date:'2026-04-20',v:1399},{date:'2026-04-19',v:928},
+{date:'2026-04-18',v:924},{date:'2026-04-17',v:743},{date:'2026-04-16',v:385},
+{date:'2026-04-15',v:252},{date:'2026-04-14',v:187},{date:'2026-04-13',v:204},
+{date:'2026-04-12',v:99},{date:'2026-04-11',v:87},{date:'2026-04-10',v:113},
+{date:'2026-04-09',v:103},{date:'2026-04-08',v:125},{date:'2026-04-07',v:99},
+{date:'2026-04-06',v:90},{date:'2026-04-05',v:65},{date:'2026-04-04',v:75},
+{date:'2026-04-03',v:73},{date:'2026-04-02',v:54},{date:'2026-04-01',v:40},
+{date:'2026-03-31',v:32},{date:'2026-03-30',v:36},{date:'2026-03-29',v:27},
+{date:'2026-03-28',v:29},{date:'2026-03-27',v:25},{date:'2026-03-26',v:17},
+{date:'2026-03-25',v:27},{date:'2026-03-24',v:10},{date:'2026-03-23',v:15},
+{date:'2026-03-22',v:12},{date:'2026-03-21',v:29},{date:'2026-03-20',v:17},
+{date:'2026-03-19',v:12},{date:'2026-03-18',v:13},{date:'2026-03-17',v:13},
+{date:'2026-03-16',v:13},{date:'2026-03-15',v:15},{date:'2026-03-14',v:18},
+{date:'2026-03-13',v:11},{date:'2026-03-12',v:6},{date:'2026-03-11',v:4},
+{date:'2026-03-10',v:8},{date:'2026-03-09',v:5},{date:'2026-03-08',v:4},
+{date:'2026-03-07',v:3},{date:'2026-03-06',v:8},{date:'2026-03-05',v:7},
+{date:'2026-03-04',v:3},{date:'2026-03-03',v:4},{date:'2026-03-02',v:5},
+{date:'2026-03-01',v:5},{date:'2026-02-28',v:7},{date:'2026-02-27',v:13},
+{date:'2026-02-26',v:13},{date:'2026-02-25',v:13},{date:'2026-02-24',v:5},
+{date:'2026-02-23',v:8},{date:'2026-02-22',v:2},{date:'2026-02-21',v:5},
+{date:'2026-02-20',v:3},{date:'2026-02-19',v:5},{date:'2026-02-18',v:2},
+{date:'2026-02-17',v:6},{date:'2026-02-16',v:3},{date:'2026-02-15',v:2},
+{date:'2026-02-14',v:2},{date:'2026-02-13',v:2},{date:'2026-02-12',v:1},
+{date:'2026-02-11',v:4},{date:'2026-02-10',v:1},{date:'2026-02-09',v:3},
+{date:'2026-02-08',v:8},{date:'2026-02-07',v:2},{date:'2026-02-06',v:3},
+{date:'2026-02-05',v:6},{date:'2026-02-04',v:3},{date:'2026-02-03',v:2},
+{date:'2026-01-31',v:3},{date:'2026-01-30',v:1},{date:'2026-01-27',v:3},
+{date:'2026-01-26',v:3},{date:'2026-01-24',v:2},{date:'2026-01-22',v:4},
+{date:'2026-01-21',v:2},{date:'2026-01-20',v:4},{date:'2026-01-19',v:3},
+{date:'2026-01-18',v:3},{date:'2026-01-17',v:3},{date:'2026-01-16',v:4},
+{date:'2026-01-15',v:2},{date:'2026-01-14',v:3},{date:'2026-01-13',v:2},
+{date:'2026-01-12',v:2},{date:'2026-01-11',v:4},{date:'2026-01-10',v:3},
+{date:'2026-01-08',v:1},{date:'2026-01-07',v:1},{date:'2026-01-06',v:3},
+{date:'2026-01-04',v:1},{date:'2026-01-03',v:1},{date:'2025-12-30',v:3},
+{date:'2025-12-29',v:2},{date:'2025-12-26',v:1},{date:'2025-12-22',v:2},
+{date:'2025-12-20',v:2},{date:'2025-12-19',v:1},{date:'2025-12-17',v:1},
+{date:'2025-12-16',v:1},{date:'2025-12-15',v:2},{date:'2025-12-14',v:7},
+{date:'2025-12-13',v:3},{date:'2025-12-11',v:1},{date:'2025-12-10',v:2},
+{date:'2025-12-08',v:1},{date:'2025-12-07',v:3},{date:'2025-12-06',v:7},
+{date:'2025-12-05',v:24},{date:'2025-12-04',v:1},{date:'2025-12-03',v:1},
+{date:'2025-12-02',v:9},{date:'2025-12-01',v:17}
+];
+
+var COLORS=['#ebedf0','#9be9a8','#40c463','#30a14e','#216e39'];
+var MONTH_SHORT=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+function getColor(v,max){
+  if(v===0)return COLORS[0];
+  var pct=v/max;
+  if(pct<0.15)return COLORS[1];
+  if(pct<0.35)return COLORS[2];
+  if(pct<0.65)return COLORS[3];
+  return COLORS[4];
+}
+
+function shortNum(v){
+  if(v>=1000000)return(v/1000000).toFixed(1).replace(/\.0$/,'')+'m';
+  if(v>=1000)return(v/1000).toFixed(1).replace(/\.0$/,'')+'k';
+  return v.toString();
+}
+
+function renderDailyGrid(){
+  var grid=document.getElementById('daily-grid');
+  var summary=document.getElementById('cal-summary');
+  grid.textContent='';
+
+  // Filter to last 90 days, fill every day including zeros
+  var cutoff=new Date();
+  cutoff.setDate(cutoff.getDate()-90);
+  var today=new Date();
+
+  // Build lookup from data
+  var lookup={};
+  DAY_DATA.forEach(function(d){lookup[d.date]=d.v});
+
+  // Generate all 90 days
+  var days=[];
+  var d=new Date(cutoff);
+  while(d<=today){
+    var y=d.getFullYear();
+    var m=(d.getMonth()+1).toString();if(m.length<2)m='0'+m;
+    var dd=d.getDate().toString();if(dd.length<2)dd='0'+dd;
+    var key=y+'-'+m+'-'+dd;
+    days.push({date:key,v:lookup[key]||0,obj:new Date(d)});
+    d.setDate(d.getDate()+1);
+  }
+
+  var max=0;var total=0;
+  days.forEach(function(d){if(d.v>max)max=d.v;total+=d.v});
+  if(max===0)max=1;
+
+  var frag=document.createDocumentFragment();
+  days.forEach(function(d){
+    var cell=document.createElement('div');
+    cell.className='day-cell';
+    cell.style.background=getColor(d.v,max);
+
+    var dateDiv=document.createElement('div');
+    dateDiv.className='day-date';
+    dateDiv.textContent=MONTH_SHORT[d.obj.getMonth()]+' '+d.obj.getDate();
+    cell.appendChild(dateDiv);
+
+    var valDiv=document.createElement('div');
+    valDiv.className='day-val';
+    valDiv.style.color=d.v>max*0.35?'#fff':'var(--text)';
+    valDiv.textContent=d.v===0?'\u2013':shortNum(d.v);
+    cell.appendChild(valDiv);
+
+    cell.setAttribute('title',d.date+': '+d.v.toLocaleString('en-IN')+' tests');
+    frag.appendChild(cell);
+  });
+
+  grid.appendChild(frag);
+
+  if(summary){
+    var daysWithData=days.filter(function(d){return d.v>0}).length;
+    var avg=daysWithData?Math.round(total/daysWithData):0;
+    summary.textContent='Total: '+total.toLocaleString('en-IN')+' \u00b7 '+days.length+' days \u00b7 '+daysWithData+' active \u00b7 avg '+avg.toLocaleString('en-IN')+'/active day';
+  }
+}
+
+(function init(){
+  var el=document.getElementById('gen-date');
+  if(el)el.textContent=new Date().toLocaleDateString('en-IN',{year:'numeric',month:'short',day:'numeric'});
+  renderDailyGrid();
+})();
+</script>
+</body>
+</html>

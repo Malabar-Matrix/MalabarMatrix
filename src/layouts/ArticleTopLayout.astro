@@ -12,6 +12,8 @@ const { title, summary, date } = data
 
 const demoUrl = collection === "projects" ? data.demoUrl : null
 const repoUrl = collection === "projects" ? data.repoUrl : null
+const analyticsUrl = collection === "projects" ? data.analyticsUrl : null
+const quickAnalyticsUrl = collection === "projects" ? data.quickAnalyticsUrl : null
 ---
 
 <div>
@@ -44,9 +46,9 @@ const repoUrl = collection === "projects" ? data.repoUrl : null
   <div class="mt-1">
     {summary}
   </div>
-  {(demoUrl || repoUrl) && 
+  {(demoUrl || repoUrl || analyticsUrl || quickAnalyticsUrl) &&
   <div class="mt-4 flex flex-wrap gap-2">
-    {demoUrl && 
+    {demoUrl &&
       <a href={demoUrl} target="_blank" class="group flex gap-2 items-center px-3 py-1.5 truncate rounded text-xs md:text-sm lg:text-base border border-black/25 dark:border-white/25 hover:bg-black/5 hover:dark:bg-white/15 blend">
         <svg class="size-4">
           <use href="/ui.svg#globe" class="fill-current group-hover:fill-black group-hover:dark:fill-white blend"/>
@@ -56,7 +58,27 @@ const repoUrl = collection === "projects" ? data.repoUrl : null
         </span>
       </a>
     }
-    {repoUrl && 
+    {quickAnalyticsUrl &&
+      <a href={quickAnalyticsUrl} target="_blank" class="group flex gap-2 items-center px-3 py-1.5 truncate rounded text-xs md:text-sm lg:text-base border border-black/25 dark:border-white/25 hover:bg-black/5 hover:dark:bg-white/15 blend">
+        <svg class="size-4">
+          <use href="/ui.svg#trending-up" class="stroke-current group-hover:stroke-black group-hover:dark:stroke-white blend"/>
+        </svg>
+        <span class="text-current group-hover:text-black group-hover:dark:text-white blend">
+          Quick Analytics
+        </span>
+      </a>
+    }
+    {analyticsUrl &&
+      <a href={analyticsUrl} target="_blank" class="group flex gap-2 items-center px-3 py-1.5 truncate rounded text-xs md:text-sm lg:text-base border border-black/25 dark:border-white/25 hover:bg-black/5 hover:dark:bg-white/15 blend">
+        <svg class="size-4">
+          <use href="/ui.svg#bar-chart" class="stroke-current group-hover:stroke-black group-hover:dark:stroke-white blend"/>
+        </svg>
+        <span class="text-current group-hover:text-black group-hover:dark:text-white blend">
+          View Full Analytics
+        </span>
+      </a>
+    }
+    {repoUrl &&
       <a href={repoUrl} target="_blank" class="group flex gap-2 items-center px-3 py-1.5 truncate rounded text-xs md:text-sm lg:text-base border border-black/25 dark:border-white/25 hover:bg-black/5 hover:dark:bg-white/15 blend">
         <svg class="size-4">
           <use href="/ui.svg#link" class="fill-current group-hover:fill-black group-hover:dark:fill-white blend"/>
@@ -66,6 +88,6 @@ const repoUrl = collection === "projects" ? data.repoUrl : null
         </span>
       </a>
     }
-  </div> 
+  </div>
   }
 </div>
